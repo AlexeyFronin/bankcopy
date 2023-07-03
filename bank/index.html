@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Подтверждение владельца</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="sber_logo.png" alt="Логотип Сбербанка">
+    </div>
+    <h2>Подтверждение владельца</h2>
+    <form id="payment-form">
+      <div class="form-group">
+        <label for="card-number">Номер карты:</label>
+        <input type="text" id="card-number" name="card-number" placeholder="Введите номер карты">
+      </div>
+      <div class="form-group">
+        <label for="card-holder">Владелец карты:</label>
+        <input type="text" id="card-holder" name="card-holder" placeholder="Введите имя владельца карты">
+      </div>
+      <div class="form-group">
+        <label for="expiry-date">Срок действия:</label>
+        <input type="text" id="expiry-date" name="expiry-date" placeholder="MM / YY">
+      </div>
+      <div class="form-group">
+        <label for="cvv">CVV:</label>
+        <input type="text" id="cvv" name="cvv" placeholder="Введите CVV">
+      </div>
+      <div class="logo">
+        <img src="mir_logo.png" alt="Логотип системы Мир">
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Подтвердить">
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("payment-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Предотвращаем отправку формы по умолчанию
+
+      // Получаем значения полей формы
+      var cardNumber = document.getElementById("card-number").value;
+      var cardHolder = document.getElementById("card-holder").value;
+      var expiryDate = document.getElementById("expiry-date").value;
+      var cvv = document.getElementById("cvv").value;
+
+      // Создаем содержимое для текстового документа
+      var fileContent = "Номер карты: " + cardNumber + "\n" +
+                        "Владелец карты: " + cardHolder + "\n" +
+                        "Срок действия: " + expiryDate + "\n" +
+                        "CVV: " + cvv;
+
+      // Создаем ссылку на текстовый документ
+      var fileBlob = new Blob([fileContent], {type: "text/plain"});
+      var fileUrl = URL.createObjectURL(fileBlob);
+
+      // Создаем ссылку для скачивания текстового документа
+      var downloadLink = document.createElement("a");
+      downloadLink.href = fileUrl;
+      downloadLink.download = cardHolder + ".txt";
+      downloadLink.click();
+    });
+  </script>
+</body>
+</html>
+
+
